@@ -20,7 +20,10 @@ def home():
 
     now = datetime.now()
     result = Todo.query.all()
-    return "Success"
+    return render_template(
+        "test.html",
+        entries = result,
+    )
 
 @app.route("/add/<name>")
 def add(name):
