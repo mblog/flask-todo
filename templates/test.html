@@ -1,12 +1,23 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Hello, Flask</title>
-    </head>
-    <body>
-        {% for entry in entries %}
-        <p>{{ entry }}</p>
-        {% endfor %}
-    </body>
-</html>
+{% extends "layout.html" %}
+{% block title %}
+My Todo App
+{% endblock %}
+{% block content %}
+    <div class="container mt-2 mx-auto">
+    <div class="card-columns">
+    {% for entry in entries %}
+    <div class="card">
+        <div class="card-body">
+            <h5>
+                {{ entry.name }}
+            </h5>
+        </div>
+        <div class="card-footer text-muted">
+            <a href="/del/{{ entry.id }}">löschen</a>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+    </div>
+{% endblock %}
+

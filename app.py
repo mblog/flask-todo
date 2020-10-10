@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import render_template
+from flask import render_template,request,redirect
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 
@@ -13,7 +13,7 @@ class Todo(db.Model):
     name = db.Column(db.String(120), nullable=False)
 
     def __repr__(self):
-        return '<Todo %r>' % self.name
+        return self
 
 @app.route("/")
 def home():
@@ -25,9 +25,24 @@ def home():
         entries = result,
     )
 
-@app.route("/add/<name>")
-def add(name):
+'''@app.route("/add/<name>")
+def add_with_name(name):
     todo = Todo(time=datetime.now(), name=name)
     db.session.add(todo)
     db.session.commit()
-    return "Success"
+    return "Success"'''
+
+@app.route("/add/", methods=["POST"])
+def add():
+    name = request.form['todo']
+    todo = Todo(time=datetime.now(), name=name)
+    db.session.add(todo)
+    db.session.commit()
+    return redirect("/")
+
+@app.route("/del/<id>")
+def delete(id):
+    todo = Todo.query.filter_by(id=id).first()
+    db.session.delete(todo)
+    db.session.commit()
+    return redirect("/")
