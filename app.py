@@ -16,16 +16,14 @@ class Todo(db.Model):
         return self
 
 @app.route("/")
-@app.route('/index')
 def home():
-
     result = Todo.query.all()
     return render_template(
         "test.html",
         entries = result,
     )
 
-@app.route("/add/", methods=["POST"])
+@app.route("/add", methods=["POST"])
 def add():
     name = request.form['todo']
     todo = Todo(time=datetime.now(), name=name)
