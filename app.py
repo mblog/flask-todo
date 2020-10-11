@@ -1,11 +1,14 @@
 from flask import Flask
-from flask import render_template,request,redirect
+from flask import render_template,request,redirect, url_for
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
+
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
+
 
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -15,7 +18,10 @@ class Todo(db.Model):
     def __repr__(self):
         return self
 
+
+
 @app.route("/")
+@app.route('/index')
 def home():
 
     now = datetime.now()
@@ -23,6 +29,7 @@ def home():
     return render_template(
         "test.html",
         entries = result,
+        current_user = current_user,
     )
 
 '''@app.route("/add/<name>")
@@ -38,7 +45,7 @@ def add():
     todo = Todo(time=datetime.now(), name=name)
     db.session.add(todo)
     db.session.commit()
-    return redirect("/")
+    return redirect(url_for('home'))
 
 @app.route("/del/<id>")
 def delete(id):
