@@ -7,12 +7,12 @@ My Todo App
     {% for entry in entries %}
     <div class="card">
         <div class="card-body">
-            <h5>
+            <h4>
                 {{ entry.name }}
-            </h5>
+            </h4>
         </div>
         <div class="card-footer text-muted">
-            <a href="/del/{{ entry.id }}">löschen</a>
+            <a class="text-danger" href="/del/{{ entry.id }}">löschen</a>
         </div>
     </div>
     {% endfor %}
