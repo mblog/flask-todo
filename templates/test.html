@@ -12,7 +12,7 @@ My Todo App
             </h5>
         </div>
         <div class="card-footer text-muted">
-            <a class="text-danger" href="/del/{{ entry.id }}">löschen</a>
+            <a class="text-danger" href="{{ url_for('delete', id=entry.id )}}">löschen</a>
         </div>
     </div>
     {% endfor %}
